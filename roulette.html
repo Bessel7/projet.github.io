@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>roulette</title>
+    <link rel="stylesheet" href="roulette.css">
+</head>
+
+<body>
+
+    <script>   
+        
+        // Fonction qui dit si le joueur a gagné ou perdu
+            /*
+                • Si l'ordinateur tire 0, la mise est perdu.
+                • Si l'ordinateur tire le numéro du joueur, il rend la mise plus 35 fois sa valeur.
+                • Si l'ordinateur tire un numéro pair et que l'on a choisi « Pair », il rend la mise plus 1 fois sa valeur. Même chose avec les impairs.
+                Dans tous les autres cas, la mise est perdue.
+            */
+
+        // porte monnaie du joueur
+        let wallet = 100;
+
+        // porte monnaie de l'ordinateur
+        let for_ordi=0;
+        
+        // Determine s'il gagne ou perd et affiche le résultat
+        function win_or_lose() {
+
+            // mise du joueur
+            let player_bet = document.getElementById("mise").value;
+
+            // si la mise est possible
+            if( parseInt(player_bet) <= wallet ){
+
+                // gain du joueur
+                let player_gain = 0;            
+
+                // Choix du joueur
+                let selectElmt = document.getElementById("choice");
+                let player_choice = selectElmt.options[selectElmt.selectedIndex].value;
+
+                // -----------Code du jeu--------------
+    
+                let resultat;                
+
+                // Déclaration et initialisation de la variable qui contient le nombre généré par l'ordinateur
+                function ordi() {                
+                    return Math.round( 36 * Math.random() ); // renvoie un nombre aléatoire entre 0 et 36
+                }
+                let generated_number = ordi();
+
+                if( generated_number == 0 ) // vous avez perdu
+                {
+                    resultat = "vous avez perdu";
+                    wallet -= parseInt(player_bet);
+                    for_ordi += parseInt(player_bet);
+                }
+                else if ( generated_number == player_choice ) // l'ordinateur rend la mise plus 35 fois sa valeur   
+                {
+                    player_gain = parseInt( 35 * player_bet);
+                    resultat = "vous avez gagné";
+                    wallet += player_gain;
+                }
+                else if ( (generated_number % 2 == 0) && (player_choice == 38) ) // l'ordinateur rend la mise plus 1 fois sa valeur
+                {
+                    player_gain = parseInt( player_bet);
+                    resultat = "vous avez gagné";
+                    wallet += player_gain;
+                }
+                else if ( (generated_number % 2 == 1) && (player_choice == 37) ) // l'ordinateur rend la mise plus 1 fois sa valeur
+                {
+                    player_gain = parseInt( player_bet);
+                    resultat = "vous avez gagné";
+                    wallet += player_gain;
+                }
+                else // la mise est perdue
+                {
+                    resultat = "vous avez perdu";
+                    wallet -= parseInt(player_bet);
+                    for_ordi += parseInt(player_bet);
+                } 
+
+                // Affichage
+                document.getElementById("fauche").innerHTML = "";
+                document.getElementById("bet").innerHTML = "Votre gain : "+ player_gain +" milles francs CFA";
+                document.getElementById("by_robot").innerHTML = "L'ordinateur génère "+generated_number;
+                document.getElementById("said_Win_or_Lose").innerHTML = resultat;         
+                document.getElementById("porte_monnaie").innerHTML = "vous avez "+ wallet +" milles francs CFA dans votre porte monnaie";   
+                document.getElementById("machine").innerHTML = "L'ordinateur possède "+for_ordi+" milles francs CFA";
+            }
+        
+            else{
+                document.getElementById("bet").innerHTML = "";
+                document.getElementById("by_robot").innerHTML = "";
+                document.getElementById("said_Win_or_Lose").innerHTML = "";        
+                document.getElementById("porte_monnaie").innerHTML = "";   
+                document.getElementById("machine").innerHTML = "";
+                document.getElementById("fauche").innerHTML = "Vous n'avez pas suffisamment d'agent pour effectuer cette mise."
+            }
+
+        }
+
+    </script>
+
+
+    <div class="content">
+        <div class="principal">
+
+            <!--1. Faire un <select> avec les options 
+            « Pair », « Impair » et les nombres de 1 à 36.-->        
+            <p> Placez la mise : 
+                <select name="" id="choice">
+                    <option value="">Choisir</option>
+                    <option value="38">Pair</option>
+                    <option value="37">Impair</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                </select>
+            </p>
+
+            <!-- 2. Faire un champ « number » où le joueur saisi une somme en milliers de 
+            francs CFA (exemple : 10 pour 10 mille francs). -->
+
+            <p> La mise du joueur en milliers de francs CFA : 
+                <input type="number" id="mise" placeholder="Saisissez votre mise svp" min="1" max="wallet">
+            </p>
+
+            <!--3. Ajouter un bouton « Go ! ». Quand on clique sur le bouton, l'ordinateur tire un numéro au hasard
+            entre 0 et 36.
+            • Si l'ordinateur tire 0, la mise est perdu.
+            • Si l'ordinateur tire le numéro du joueur, il rend la mise plus 35 fois sa valeur.
+            • Si l'ordinateur tire un numéro pair et que l'on a choisi « Pair », il rend la mise plus 1 fois sa
+            valeur. Même chose avec les impairs.
+            Dans tous les autres cas, la mise est perdue.-->
+
+            <p>
+                <input type="button" value="Go!" onclick="win_or_lose()">
+            </p>
+               
+            <!-- le nombre généré par l'ordinateur-->
+            <p id="by_robot"> </p>
+
+            <!-- gain du joueur-->
+            <p id="bet"> </p>
+
+            <p id="fauche"> </p>
+
+            <!-- vous avez gagné ou perdu-->
+            <p id="said_Win_or_Lose"> </p>
+
+            <p id="porte_monnaie"> </p>
+
+            <p id="machine"> </p>
+
+            <p>
+                <input type="button" value = "Réinitialiser" onclick="window.location.reload(false)">
+            </p>
+                    
+            <p class="bouttons">
+                <a href="acceuil_casino.html"> RETOURNER A L'ACCUEUIL </a> 
+                <a href="la_roulette.html">   LA ROULETTE   </a>                                           
+                <a href="game_rules.html">LES REGLES DU JEU</a>                                                                               
+            </p>
+        </div>                       
+    </div>
+  
+</body>
+
+</html>
