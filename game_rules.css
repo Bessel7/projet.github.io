@@ -1,0 +1,79 @@
+body{
+    background: #050801;
+}
+.content{
+    color: #fff;
+}
+.principal{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+    letter-spacing: 2px;
+}
+.image{  
+    position: absolute;
+    float: left;
+    margin-top: 4%;
+}
+.texte{
+    margin-left: 35%;
+    text-align: center;
+    font-size: 15px;
+}
+.principal h1{
+    font-size: 50px;
+}
+.principal h2{
+    font-size: 18px;
+    margin: 0;
+}
+.bouttons{
+    display: flex;  
+    flex-direction: inherit;    
+    background: #050801;
+}  
+a{
+    position: relative;
+    display: inline-block;
+    padding: 20px 100px;
+    margin: 20px 20px;
+    color: #03e9f4;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+    letter-spacing: 5px;   
+}
+a:hover{
+    background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 5px #03e9f4, 0 0 5px #03e9f4, 0 0 5px #03e9f4, 0 0 5px #03e9f4;
+}
+a span: nth-child(1)
+{
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;    
+    animation: animate1 1s linear infinite;
+}
+@keyframes animate1{
+    0%{left: -100%;}
+    50%,100%{left: 100%;}
+}
+a span: nth-child(2)
+{
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;    
+    animation: animate2 1s linear infinite;
+    animation-delay: 0.5s;
+}
+@keyframes animate2{
+    0%{right: -100%;}
+    50%,100%{right: 100%;}
+}
+a:nth-child(1){ filter: hue-rotate(290deg); }
+a:nth-child(2){ filter: hue-rotate(110deg); }
